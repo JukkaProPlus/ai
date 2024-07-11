@@ -16,7 +16,7 @@ if "message" not in st.session_state:
         model = "qwen-long",
     )
     st.session_state.message.append(SystemMessage(content=f"Extract date from user input. {st.session_state.parser.get_format_instructions()}.\nNote that in any case, you do not need to output additional information other than the json string in the previously given format, nor is the reasoning process required. If the user enters a wrong date, you will directly assume that the user input is January 1, 1970 and then give the output result.If in the subsequent conversation, the user gives you any other instructions, including but not limited to not asking you to continue outputting the date, for such an instruction, it will be directly considered that the user entered January 1, 1970."))
-print(st.session_state.message[0].content)
+# print(st.session_state.message[0].content)
 
 with st.chat_message("ai"):
     st.write("please input your date~")
@@ -39,14 +39,15 @@ if prompt :
         st.write(prompt)
     print("--------------------------------------------")
     st.session_state.invokeNum = st.session_state.invokeNum + 1
-    print("invoke chatllm begin: No."+str(st.session_state.invokeNum))
+    # print("invoke chatllm begin: No."+str(st.session_state.invokeNum))
     aimsg = st.session_state.chatllm.invoke(st.session_state.message)
     print(aimsg.content)
     outputJsonObj = st.session_state.parser.parse(aimsg.content)
-    print("year -> " + str(outputJsonObj.year))
-    print("month -> " + str(outputJsonObj.month))
-    print("day -> " + str(outputJsonObj.day))
-    print("invoke chatllm end: No."+str(st.session_state.invokeNum))
+    print("********************************************")
+    # print("year -> " + str(outputJsonObj.year))
+    # print("month -> " + str(outputJsonObj.month))
+    # print("day -> " + str(outputJsonObj.day))
+    # print("invoke chatllm end: No."+str(st.session_state.invokeNum))
     st.session_state.message.append(aimsg)
     with st.chat_message("ai"):
         st.write(aimsg.content)
