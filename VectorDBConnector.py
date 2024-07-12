@@ -4,8 +4,8 @@ from chromadb.config import Settings
 
 class MyVectorDBConnector:
     def __init__(self, collection_name, embedding_fn):
-        chroma_client = chromadb.Client(Settings(allow_reset=True))
-
+        # chroma_client = chromadb.Client(Settings(allow_reset=True))
+        chroma_client = chromadb.PersistentClient(path="./chroma")
         # 为了演示，实际不需要每次 reset()
         # chroma_client.reset()
         print("AAAAAAAAAAAAAAA")
