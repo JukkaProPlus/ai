@@ -8,13 +8,12 @@ class MyVectorDBConnector:
         chroma_client = chromadb.PersistentClient(path="./chroma")
         # 为了演示，实际不需要每次 reset()
         # chroma_client.reset()
-        print("AAAAAAAAAAAAAAA")
         # 创建一个 collection
         self.collection = chroma_client.get_or_create_collection(
             name=collection_name)
-        print("BBBBBBBBBBBBBBBBBBBB")
         self.embedding_fn = embedding_fn
-        print("CCCCCCCCCCCCCCCCCCCC")
+        print("vectordb on path './chroma' is ready~")
+        print("*******************************************")
 
     def add_documents(self, documents):
         '''向 collection 中添加文档与向量'''
