@@ -1,2 +1,6 @@
 chroma/
 __pycache__/
+venv_ai/
+venv/
+*.venv/
+venv_*/
