@@ -1,4 +1,5 @@
 from langchain_core.prompts import PromptTemplate
+
 # from Tools import tools
 
 class FuncCaller():
@@ -8,7 +9,6 @@ class FuncCaller():
         self.prompt = PromptTemplate.from_file("funcCallerPrompt.txt")
     def invoke(self, user_input: str):
         result = self.llm.invoke(self.prompt.format(tools_desc=self.tools_desc, user_input=user_input))
-        
         return result
 
 # from FileTool import *

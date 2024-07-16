@@ -7,8 +7,10 @@
 {user_input}
 
 你一定不要给出验证的代码，也一定不要给出示例，你仅仅只需要输出一个如下示例的python3代码：
+
 ```python
 def run():->str:
     # your code here
     return "your result"
+print(run())
 ```
