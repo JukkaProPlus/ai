@@ -5,7 +5,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.messages import AIMessage
 from langchain_core.messages import SystemMessage
 from langchain_core.messages import ToolMessage
-
+import os
 def GetWeatherFunc(location:str):
     if location == "长沙":
         return "长沙现在温度是23度"
@@ -16,7 +16,12 @@ def GetPopulationFunc(location):
         return "长沙现有人口800万"
     if location == "武汉":
         return "武汉现有人口800万"
-    
+def GetCurDirectoryFunc():
+    return "当前目录是: " + os.getcwd()
+def GetFileListFunc():
+    return "当前目录下文件列表是: " + str(os.listdir())
+def GetFileContentFunc(filePath):
+    return "文件内容是: " + str(open(filePath, "r").read())
 
 if "messages" not in st.session_state:
     print("init")
@@ -39,9 +44,18 @@ if "messages" not in st.session_state:
         location:str = Field(
             ..., description="城市名字,如 '长沙'"
         )
-    st.session_state.tongyi_chat_with_tool = st.session_state.tongyi_chat.bind_tools([GetWeather, GetPopulation])
+    class GetCurDirectory(BaseModel):
+        """获取当前目录"""
+    class GetFileList(BaseModel):
+        """获取当前目录下文件列表"""
+    class GetFileContent(BaseModel):
+        """获取指定文件的内容"""
+        filepath:str = Field(
+            ..., description="文件路径,如 'D:/test.txt'"
+        )
+    st.session_state.tongyi_chat_with_tool = st.session_state.tongyi_chat.bind_tools([GetWeather, GetPopulation, GetCurDirectory, GetFileList, GetFileContent])
 for msg in st.session_state.messages:
-    if isinstance(msg, AIMessage):
+    if isinstance(msg, AIMessage) and msg.content != "":
         with st.chat_message("ai"):
             st.write(msg.content)
     elif isinstance(msg, HumanMessage):
@@ -74,6 +88,19 @@ if prompt := st.chat_input("say something"):
                 content = GetPopulationFunc(caller["args"]["location"])  
                 tool_message = ToolMessage(content=content, tool_call_id=response.id)  
                 st.session_state.messages.append(tool_message)  
+            elif caller["name"] == "GetCurDirectory":  
+                content = GetCurDirectoryFunc()  
+                tool_message = ToolMessage(content=content, tool_call_id=response.id)  
+                st.session_state.messages.append(tool_message)  
+            elif caller["name"] == "GetFileList":  
+                content = GetFileListFunc()  
+                tool_message = ToolMessage(content=content,tool_call_id=response.id)  
+                st.session_state.messages.append(tool_message)  
+            elif caller["name"] == "GetFileContent":  
+                content = GetFileContentFunc(caller["args"]["filepath"])  
+                tool_message = ToolMessage(content=content, tool_call_id=response.id)  
+                st.session_state.messages.append(tool_message)
+
         response = st.session_state.tongyi_chat_with_tool.invoke(st.session_state.messages)
         st.session_state.messages.append(AIMessage(response.content))
         with st.chat_message("ai"):
