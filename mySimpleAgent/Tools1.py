@@ -28,10 +28,16 @@ document_getAllFilePath_tool = StructuredTool.from_function(
     name="getAllFilePath",
     description=getAllFilePath.__doc__,
 )
-document_getJamesSum_tool = StructuredTool.from_function(
-    func=getJamesSum,
-    name="getJamesSum",
-    description=getJamesSum.__doc__,
+document_getJamesResult_tool = StructuredTool.from_function(
+    func=getJamesResult,
+    name="getJamesResult",
+    description=getJamesResult.__doc__,
+)
+
+document_getFileContent_tool = StructuredTool.from_function(
+    func=getFileContent,
+    name="getFileContent",
+    description=getFileContent.__doc__,
 )
 
 tools = [
@@ -39,7 +45,8 @@ tools = [
     document_isFileExist_tool,
     document_isDirExist_tool,
     document_getAllFilePath_tool,
-    document_getJamesSum_tool,
+    document_getJamesResult_tool,
+    document_getFileContent_tool,
     excelAnalysisTool(
         llm = ChatTongyi(model="qwen-max"),
         prompt=PromptTemplate.from_file("./mySimpleAgent.txt"),

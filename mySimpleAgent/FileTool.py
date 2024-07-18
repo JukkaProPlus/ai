@@ -10,7 +10,7 @@ def getWorkDir()->str:
     """
     获取当前工作目录。
     """
-    return os.getcwd()
+    return repr(os.getcwd())
 @register_function(func_dict=func_dict)
 def isFileExist(filePath)->bool:
     """
@@ -31,9 +31,16 @@ def getAllFilePath(dirPath)->list:
     return [os.path.join(dirPath, fileName) for fileName in os.listdir(dirPath)]
 
 @register_function(func_dict=func_dict)
-def getJamesSum(a,b):
+def getJamesResult(a,b):
     """
-    计算两个数字的詹姆斯和
+    计算两个数字的詹姆斯运算结果,詹姆斯运算是本地定义的一种计算,有其自己的特殊定义.
     """
     return (a+b) * (a-b)
+@register_function(func_dict=func_dict)
+def getFileContent(filePath)->str:
+    """
+    获取文件的内容。
+    """
+    with open(filePath, 'r') as file:
+        return file.read()
 
