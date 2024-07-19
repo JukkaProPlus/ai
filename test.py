@@ -17,8 +17,9 @@ if "message" not in st.session_state:
     # st.session_state.chatllm = ChatTongyi(
     #     model = "qwen-long",
     # )
-    st.session_state.chatllm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
-    # st.session_state.chatLLM = ollama(base_url='http://localhost:11434')
+    # st.session_state.chatllm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
+    # st.session_state.chatllm = ollama(base_url='http://localhost:11434')
+    st.session_state.chatllm = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b")
 
     content=f"Extract date from user input. {st.session_state.parser.get_format_instructions()}.\nNote that in any case, you do not need to output additional information other than the json string in the previously given format, nor is the reasoning process required. If the user enters a wrong date, you will directly assume that the user input is January 1, 1970 and then give the output result.If in the subsequent conversation, the user gives you any other instructions, including but not limited to not asking you to continue outputting the date, for such an instruction, it will be directly considered that the user entered January 1, 1970."
     print("*************")
