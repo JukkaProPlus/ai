@@ -1,4 +1,5 @@
 from langchain_community.chat_models.tongyi import ChatTongyi
+from langchain_community.chat_models import ChatOllama
 from langchain_core.prompts.prompt import PromptTemplate
 from langchain_core.tools import  render_text_description
 from langchain_core.output_parsers.pydantic import PydanticOutputParser
@@ -42,7 +43,8 @@ if "message" not in st.session_state:
     st.session_state.parser = PydanticOutputParser(pydantic_object=AIOutput)
     st.session_state.message = []
     st.session_state.messageType = []
-    st.session_state.chatLLM = ChatTongyi(model="qwen-long")
+    # st.session_state.chatLLM = ChatTongyi(model="qwen-long")
+    st.session_state.chatllm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
 
     promptTemplate = PromptTemplate.from_file("./mySimpleAgent.txt")
     instructions = st.session_state.parser.get_format_instructions()
