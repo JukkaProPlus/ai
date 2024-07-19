@@ -49,7 +49,7 @@ tools = [
     document_getFileContent_tool,
     excelAnalysisTool(
         # llm = ChatTongyi(model="qwen-max"),
-        llm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
+        llm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3"),
         prompt=PromptTemplate.from_file("./mySimpleAgent.txt"),
     ).as_tool()
     ]
