@@ -2,7 +2,7 @@ hello, world
 hello, python
 hello, ai
 hello, llm
-��ã�����
-��ã�Python
-��ã��˹�����
-��ã�LLM
+你好，世界
+你好，Python
+你好，人工智能
+你好，LLM
