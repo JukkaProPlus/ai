@@ -50,7 +50,7 @@ tools = [
     excelAnalysisTool(
         # llm = ChatTongyi(model="qwen-max"),
         # llm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3"),
-        llm = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen:7b"),
+        llm = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b"),
         prompt=PromptTemplate.from_file("./mySimpleAgent.txt"),
     ).as_tool()
     ]
