@@ -38,10 +38,11 @@ def recordMessage(msg, isFuncResult=False, isPaserseErrorReply=False):
 
 if "message" not in st.session_state:
     print("init")
+    st.session_state.invokeNum = 0
     st.session_state.parser = PydanticOutputParser(pydantic_object=AIOutput)
     st.session_state.message = []
     st.session_state.messageType = []
-    st.session_state.chatLLM = ChatTongyi(model="qwen-max")
+    st.session_state.chatLLM = ChatTongyi(model="qwen-long")
 
     promptTemplate = PromptTemplate.from_file("./mySimpleAgent.txt")
     instructions = st.session_state.parser.get_format_instructions()
@@ -109,6 +110,8 @@ if prompt:
         st.write(prompt)
 
     while True:
+        st.session_state.invokeNum = st.session_state.invokeNum + 1
+        print(f"invokeNum = {st.session_state.invokeNum}")
         response = st.session_state.chatLLM.invoke(st.session_state.message)
         print("***************AI返回begin***********************")
         print(response.content)
