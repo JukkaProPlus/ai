@@ -3,7 +3,7 @@ from FileTool import *
 from excelAnalysisTool import excelAnalysisTool
 from langchain_community.chat_models.tongyi import ChatTongyi
 from langchain_core.prompts.prompt import PromptTemplate
-
+from langchain_community.chat_models import ChatOllama
 
 document_getWorkDir_tool= StructuredTool.from_function(
     func=getWorkDir,
@@ -48,7 +48,8 @@ tools = [
     document_getJamesResult_tool,
     document_getFileContent_tool,
     excelAnalysisTool(
-        llm = ChatTongyi(model="qwen-max"),
+        # llm = ChatTongyi(model="qwen-max"),
+        llm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
         prompt=PromptTemplate.from_file("./mySimpleAgent.txt"),
     ).as_tool()
     ]
