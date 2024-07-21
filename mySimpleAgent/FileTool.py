@@ -1,5 +1,6 @@
 import os
 from FuncDict import func_dict
+import chardet
 def register_function(func_dict):  
     def decorator(func):  
         func_dict[func.__name__] = func  
@@ -44,3 +45,10 @@ def getFileContent(filePath)->str:
     with open(filePath, 'r') as file:
         return file.read()
 
+def read_file_with_chardet(file_path):
+    with open(file_path, 'rb') as f:
+        raw_data = f.read()
+        result = chardet.detect(raw_data)
+        encoding = result['encoding']
+    with open(file_path, 'r', encoding=encoding) as f:
+        return f.read()

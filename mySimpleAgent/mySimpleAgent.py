@@ -11,6 +11,7 @@ from Tools1 import tools
 from FuncDict import func_dict
 import streamlit as st
 from MsgType import MsgType
+from FileTool import read_file_with_chardet
 
 def recordMessage(msg, isFuncResult=False, isPaserseErrorReply=False):
     st.session_state.message.append(msg)
@@ -47,7 +48,8 @@ if "message" not in st.session_state:
     # st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
     st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b")
 
-    promptTemplate = PromptTemplate.from_file("./mySimpleAgent.txt")
+    promptTemplate = PromptTemplate.from_template(read_file_with_chardet("./mySimpleAgent.txt"))
+    # promptTemplate = PromptTemplate.from_file("./mySimpleAgent.txt")
     instructions = st.session_state.parser.get_format_instructions()
     # print()
     prompt = promptTemplate.format(tools=render_text_description(tools), work_dir="./data/", instructions=instructions)
