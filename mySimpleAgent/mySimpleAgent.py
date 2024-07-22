@@ -12,6 +12,8 @@ from FuncDict import func_dict
 import streamlit as st
 from MsgType import MsgType
 from FileTool import read_file_with_chardet
+import traceback
+
 
 def recordMessage(msg, isFuncResult=False, isPaserseErrorReply=False):
     st.session_state.message.append(msg)
@@ -158,6 +160,7 @@ if prompt:
                 break
         except Exception as e:
             print("解析错误 " + str(e))
+            traceback.print_exc()
             recordMessage(HumanMessage(content="你回复的内容解析不了，请检查是否是严格按照前面规定的格式进行了回复，然后输出严格按照格式的回复"), isPaserseErrorReply=True)
 
 
