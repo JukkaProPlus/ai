@@ -48,11 +48,11 @@ tools = [
     document_getJamesResult_tool,
     document_getFileContent_tool,
     excelAnalysisTool(
-        # llm = ChatTongyi(model="qwen-max"),
+        llm = ChatTongyi(model="qwen-max"),
         # llm = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3"),
-        llm = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b"),
+        # llm = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b"),
         # prompt=PromptTemplate.from_file("./mySimpleAgent.txt"),
-        prompt = PromptTemplate.from_template(read_file_with_chardet("./mySimpleAgent.txt"))
+        prompt = PromptTemplate.from_template(read_file_with_chardet("./excelAnalysisTool.txt"))
     ).as_tool()
     ]
 

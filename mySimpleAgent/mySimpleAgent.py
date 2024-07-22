@@ -44,9 +44,9 @@ if "message" not in st.session_state:
     st.session_state.parser = PydanticOutputParser(pydantic_object=AIOutput)
     st.session_state.message = []
     st.session_state.messageType = []
-    # st.session_state.chatLLM = ChatTongyi(model="qwen-long")
+    st.session_state.chatLLM = ChatTongyi(model="qwen-long")
     # st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
-    st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b")
+    # st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b")
 
     promptTemplate = PromptTemplate.from_template(read_file_with_chardet("./mySimpleAgent.txt"))
     # promptTemplate = PromptTemplate.from_file("./mySimpleAgent.txt")
@@ -156,8 +156,8 @@ if prompt:
                         st.write(funcResultMessage.content)
             else:
                 break
-        except:
-            print("解析错误")
+        except Exception as e:
+            print("解析错误 " + str(e))
             recordMessage(HumanMessage(content="你回复的内容解析不了，请检查是否是严格按照前面规定的格式进行了回复，然后输出严格按照格式的回复"), isPaserseErrorReply=True)
 
 
