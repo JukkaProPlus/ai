@@ -6,6 +6,7 @@ from .tool_create_directory import document_tool_create_directory
 from .tool_square_difference import calculate_square_difference_tool
 from .tool_calculate_triangle_area import document_tool_calculate_triangle_area
 from .tool_CalculateParallelogramArea import document_tool_CalculateParallelogramArea
+from .tool_calculate_triangle_area_by_vertices import document_tool_calculate_triangle_area_by_vertices
 
 
 tools = [
@@ -17,4 +18,5 @@ tools = [
     calculate_square_difference_tool,
     document_tool_calculate_triangle_area,
     document_tool_CalculateParallelogramArea,
+    document_tool_calculate_triangle_area_by_vertices,
 ]
