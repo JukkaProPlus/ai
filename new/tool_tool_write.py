@@ -9,7 +9,14 @@ from langchain_core.messages import HumanMessage
 from langchain_core.messages import AIMessage
 from langchain_core.messages import SystemMessage
 from langchain_core.messages import ToolMessage
-
+import chardet
+def read_file_with_chardet(file_path):
+    with open(file_path, 'rb') as f:
+        raw_data = f.read()
+        result = chardet.detect(raw_data)
+        encoding = result['encoding']
+    with open(file_path, 'r', encoding=encoding) as f:
+        return f.read()
 
 
 # def tool_write(file_path, content):
@@ -27,7 +34,7 @@ class PythonToolWriter():
             prompt_file = "./prompts/ToolWriter.txt"
         ):
         self.llm = llm.bind_tools(tools)
-        self.prompt = PromptTemplate.from_file(prompt_file)
+        self.prompt = PromptTemplate.from_template(read_file_with_chardet(prompt_file))
     def writeTool(self, quest):
         prompt = self.prompt.format(tools=render_text_description(tools), tool_desc=quest)
         message = []
@@ -65,7 +72,7 @@ class PythonToolWriter():
 if __name__ == "__main__":
     print(1)
     prompt_file = "./prompts/ToolWriter.txt"
-    prompt = PromptTemplate.from_file(prompt_file)
+    prompt = PromptTemplate.from_file(read_file_with_chardet(prompt_file))
     # quest = "写一个斐波拉契数列的python代码,输入是一个整数n,输出是斐波拉契数列的前n个数组成的字符串,数之间用逗号分隔。"
     quest = "写一个创建目录的python代码,输入是一个目录路径,输出是创建目录的结果。"
     print(2)

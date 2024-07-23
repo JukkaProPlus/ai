@@ -1,7 +1,7 @@
 from langchain.tools import StructuredTool
 def write_file(file_path, content):
     """Write content to a file."""
-    with open(file_path, 'w') as file:
+    with open(file_path, 'w', encoding="utf-8") as file:
         file.write(content)
     return "写入完毕"
 
