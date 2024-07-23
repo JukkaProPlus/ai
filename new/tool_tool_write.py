@@ -36,7 +36,7 @@ class PythonToolWriter():
 
         response = self.llm.invoke(message)
         message.append(response)
-        print("AAAAAAA "+ str(response))
+        print("AAAAAAA1 "+ str(response))
         while True:
             if response.tool_calls and len(response.tool_calls) > 0:
                 for caller in response.tool_calls:
@@ -45,7 +45,9 @@ class PythonToolWriter():
                     for tool in tools:
                         if caller["name"] == tool.name:
                             findTool = True
-                            content = tool.run(caller["args"])
+                            print(f'caller["args"] = {caller["args"]}')
+                            content = tool.func(**caller["args"])
+                            print("content = "+str(content))
                     if findTool:
                         tool_message = ToolMessage(content=content, tool_call_id=caller["id"])
                         message.append(tool_message)
@@ -53,6 +55,7 @@ class PythonToolWriter():
                         tool_message = ToolMessage(content=f"没有找到工具{caller["name"]}", tool_call_id=caller["id"])
                         message.append(tool_message)
                 response = self.llm.invoke(message)
+                print("AAAAAAA2 "+ str(response))
             else:
                 print("BBBBB "+ str(response))
                 break
