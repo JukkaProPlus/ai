@@ -66,7 +66,7 @@ if prompt := st.chat_input("say something"):
     with st.chat_message("user"):
         st.write(prompt)
     response = st.session_state.tongyi_chat_with_tool.invoke(st.session_state.messages)
-    st.session_state.messages.append(AIMessage(response.content))
+    st.session_state.messages.append(response)
 
     print("*********************************")
     print(response)
@@ -82,23 +82,23 @@ if prompt := st.chat_input("say something"):
         for caller in response.tool_calls:  
             if caller["name"] == "GetWeather":  
                 content = GetWeatherFunc(caller["args"]["location"])  
-                tool_message = ToolMessage(content=content, tool_call_id=response.id)  # 注意这里如何创建 ToolMessage 实例  
+                tool_message = ToolMessage(content=content, tool_call_id=caller["id"])  # 注意这里如何创建 ToolMessage 实例  
                 st.session_state.messages.append(tool_message)  
             elif caller["name"] == "GetPopulation":  # 使用 elif 而不是另一个 if，以避免不必要的检查  
                 content = GetPopulationFunc(caller["args"]["location"])  
-                tool_message = ToolMessage(content=content, tool_call_id=response.id)  
+                tool_message = ToolMessage(content=content, tool_call_id=caller["id"])  
                 st.session_state.messages.append(tool_message)  
             elif caller["name"] == "GetCurDirectory":  
                 content = GetCurDirectoryFunc()  
-                tool_message = ToolMessage(content=content, tool_call_id=response.id)  
+                tool_message = ToolMessage(content=content, tool_call_id=caller["id"])  
                 st.session_state.messages.append(tool_message)  
             elif caller["name"] == "GetFileList":  
                 content = GetFileListFunc()  
-                tool_message = ToolMessage(content=content,tool_call_id=response.id)  
+                tool_message = ToolMessage(content=content,tool_call_id=caller["id"])  
                 st.session_state.messages.append(tool_message)  
             elif caller["name"] == "GetFileContent":  
                 content = GetFileContentFunc(caller["args"]["filepath"])  
-                tool_message = ToolMessage(content=content, tool_call_id=response.id)  
+                tool_message = ToolMessage(content=content, tool_call_id=caller["id"])  
                 st.session_state.messages.append(tool_message)
 
         response = st.session_state.tongyi_chat_with_tool.invoke(st.session_state.messages)
