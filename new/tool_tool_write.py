@@ -66,7 +66,8 @@ if __name__ == "__main__":
     print(1)
     prompt_file = "./prompts/ToolWriter.txt"
     prompt = PromptTemplate.from_file(prompt_file)
-    quest = "写一个斐波拉契数列的python代码,输入是一个整数n,输出是斐波拉契数列的前n个数组成的字符串,数之间用逗号分隔。"
+    # quest = "写一个斐波拉契数列的python代码,输入是一个整数n,输出是斐波拉契数列的前n个数组成的字符串,数之间用逗号分隔。"
+    quest = "写一个创建目录的python代码,输入是一个目录路径,输出是创建目录的结果。"
     print(2)
     writer = PythonToolWriter(
         llm=ChatTongyi(model="qwen-max"),
