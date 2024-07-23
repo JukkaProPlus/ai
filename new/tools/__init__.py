@@ -4,6 +4,7 @@ from .tool_list_dir import document_tool_list_dir
 from .tool_fibonacci import document_tool_fibonacci
 from .tool_create_directory import document_tool_create_directory
 from .tool_square_difference import calculate_square_difference_tool
+from .tool_calculate_triangle_area import document_tool_calculate_triangle_area
 
 
 tools = [
@@ -13,4 +14,5 @@ tools = [
     document_tool_fibonacci,
     document_tool_create_directory,
     calculate_square_difference_tool,
+    document_tool_calculate_triangle_area,
 ]
