@@ -1,9 +1,9 @@
 """
-ì³²¨ÄÇÆõÊýÁÐÉú³É¹¤¾ßÄ£¿é
+æ–æ³¢é‚£å¥‘æ•°åˆ—ç”Ÿæˆå·¥å…·æ¨¡å—
 """
 
 def fibonacci(n):
-    """Éú³Éì³²¨ÄÇÆõÊýÁÐµÄÇ°n¸öÊý£¬·µ»ØÓÉÕâÐ©Êý×Ö×é³ÉµÄ×Ö·û´®£¬ÊýÖ®¼äÓÃ¶ººÅ·Ö¸ô."""
+    """ç”Ÿæˆæ–æ³¢é‚£å¥‘æ•°åˆ—çš„å‰nä¸ªæ•°ï¼Œè¿”å›žç”±è¿™äº›æ•°å­—ç»„æˆçš„å­—ç¬¦ä¸²ï¼Œæ•°ä¹‹é—´ç”¨é€—å·åˆ†éš”."""
     sequence = []
     a, b = 0, 1
     while len(sequence) < n:
@@ -16,5 +16,5 @@ from langchain.tools import StructuredTool
 document_tool_fibonacci = StructuredTool.from_function(
     func=fibonacci,
     name='FibonacciSequence',
-    description='Éú³Éì³²¨ÄÇÆõÊýÁÐµÄÇ°n¸öÊý£¬·µ»ØÓÉÕâÐ©Êý×Ö×é³ÉµÄ×Ö·û´®£¬ÊýÖ®¼äÓÃ¶ººÅ·Ö¸ô¡£ÊäÈëÊÇÒ»¸öÕûÊýn¡£'
+    description='ç”Ÿæˆæ–æ³¢é‚£å¥‘æ•°åˆ—çš„å‰nä¸ªæ•°ï¼Œè¿”å›žç”±è¿™äº›æ•°å­—ç»„æˆçš„å­—ç¬¦ä¸²ï¼Œæ•°ä¹‹é—´ç”¨é€—å·åˆ†éš”ã€‚è¾“å…¥æ˜¯ä¸€ä¸ªæ•´æ•°nã€‚'
 )
