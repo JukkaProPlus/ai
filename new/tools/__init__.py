@@ -7,7 +7,7 @@ from .tool_square_difference import calculate_square_difference_tool
 from .tool_calculate_triangle_area import document_tool_calculate_triangle_area
 from .tool_CalculateParallelogramArea import document_tool_CalculateParallelogramArea
 from .tool_calculate_triangle_area_by_vertices import document_tool_calculate_triangle_area_by_vertices
-
+from .tool_calculate_sphere_volume import document_tool_calculate_sphere_volume
 
 tools = [
     document_tool_read_file,
@@ -19,4 +19,5 @@ tools = [
     document_tool_calculate_triangle_area,
     document_tool_CalculateParallelogramArea,
     document_tool_calculate_triangle_area_by_vertices,
+    document_tool_calculate_sphere_volume,
 ]
