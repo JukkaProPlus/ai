@@ -13,8 +13,10 @@ from .tool_print_pascal_triangle import document_tool_print_pascal_triangle
 from .tool_calculate_gcd import document_tool_calculate_gcd
 from .tool_calculate_lcm import document_tool_calculate_lcm
 from .tool_convert_timestamp import document_tool_convert_timestamp
+from .tool_convert_decimal_to_hex import document_tool_ConvertDecimalToHex
+from .tool_convert_octal import document_tool_ConvertDecimalToOctal
 
-tools = [
+tool_list = [
     document_tool_read_file,
     document_tool_write_file,
     document_tool_list_dir,
@@ -30,4 +32,6 @@ tools = [
     document_tool_calculate_gcd,
     document_tool_calculate_lcm,
     document_tool_convert_timestamp,
+    document_tool_ConvertDecimalToHex,
+    document_tool_ConvertDecimalToOctal,
 ]

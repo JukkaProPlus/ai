@@ -5,7 +5,7 @@ from langchain_core.language_models import BaseChatModel, BaseLanguageModel
 from typing import Union
 from langchain_core.prompts import PromptTemplate
 from langchain_core.tools import  render_text_description
-from tools import tools
+from tools import tool_list
 from langchain_core.messages import HumanMessage
 from langchain_core.messages import AIMessage
 from langchain_core.messages import SystemMessage
@@ -34,13 +34,13 @@ class PythonToolWriter():
             llm:Union[BaseLanguageModel, BaseChatModel],
             prompt_file = "./prompts/ToolWriter.txt"
         ):
-        self.llm = llm.bind_tools(tools)
+        self.llm = llm.bind_tools(tool_list)
         self.prompt = PromptTemplate.from_template(read_file_with_chardet(prompt_file))
     def writeTool(self, quest):
         inputToken = 0
         outputToken = 0
         totalToken = 0
-        prompt = self.prompt.format(tools=render_text_description(tools), tool_desc=quest)
+        prompt = self.prompt.format(tools=render_text_description(tool_list), tool_desc=quest)
         message = []
         message.append(prompt)
         print(prompt)
@@ -57,7 +57,7 @@ class PythonToolWriter():
                 for caller in response.tool_calls:
                     findTool = False
                     content = ""
-                    for tool in tools:
+                    for tool in tool_list:
                         if caller["name"] == tool.name:
                             findTool = True
                             print(f'caller["args"] = {caller["args"]}')
@@ -97,7 +97,10 @@ if __name__ == "__main__":
     # quest = "写一个能打印杨辉三角的工具，输入是n,输出是杨辉三角的前n行，每行用逗号分隔"
     # quest = "写一个能计算两个数的最大公约数的工具，输入是两个数a,b,输出是‘两个数的最大公约数是c’这样的字符串，字符串里面的c用它的最大公约数填充"
     # quest = "写一个能计算两个数的最小公倍数的工具，输入是两个数a,b,输出时'a和b的最小公倍数是c'这样的字符串，字符串里面的a，b，c用对应的参数和结果填充"
-    quest = "写一个能转换时间戳为当前时间字符串的工具，输入是时间戳timestamp，输出是类似‘2021年1月1日19点33分27秒’这样的字符串"
+    # quest = "写一个能转换时间戳为当前时间字符串的工具，输入是时间戳timestamp，输出是类似‘2021年1月1日19点33分27秒’这样的字符串"
+    # quest = "写一个能将10进制表示的数字字符串转换为16进制表示的数字的字符串的工具，输入是类似'25'这样的字符串，输出是'1D'这样的字符串"
+    quest = "写一个能将10进制表示的数字字符串转换为8进制表示的数字的字符串的工具，输入是类似'29'这样的字符串，输出是'35'这样的字符串"
+
     print(2)
     writer = PythonToolWriter(
         # llm=ChatTongyi(model="qwen-max"),
