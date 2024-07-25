@@ -10,6 +10,7 @@ from .tool_calculate_triangle_area_by_vertices import document_tool_calculate_tr
 from .tool_calculate_sphere_volume import document_tool_calculate_sphere_volume
 from .tool_CalculateQuadrilateralArea import document_tool_CalculateQuadrilateralArea
 from .tool_print_pascal_triangle import document_tool_print_pascal_triangle
+from .tool_calculate_gcd import document_tool_calculate_gcd
 
 tools = [
     document_tool_read_file,
@@ -24,4 +25,5 @@ tools = [
     document_tool_calculate_sphere_volume,
     document_tool_CalculateQuadrilateralArea,
     document_tool_print_pascal_triangle,
+    document_tool_calculate_gcd,
 ]

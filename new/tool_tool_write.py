@@ -37,6 +37,9 @@ class PythonToolWriter():
         self.llm = llm.bind_tools(tools)
         self.prompt = PromptTemplate.from_template(read_file_with_chardet(prompt_file))
     def writeTool(self, quest):
+        inputToken = 0
+        outputToken = 0
+        totalToken = 0
         prompt = self.prompt.format(tools=render_text_description(tools), tool_desc=quest)
         message = []
         message.append(prompt)
@@ -44,6 +47,10 @@ class PythonToolWriter():
 
         response = self.llm.invoke(message)
         message.append(response)
+        print(f"本轮消耗的token数：inputToken:{response.response_metadata["token_usage"]["prompt_tokens"]}, outputToken:{response.response_metadata["token_usage"]["completion_tokens"]}, totalToken:{response.response_metadata["token_usage"]["total_tokens"]}")
+        inputToken += response.response_metadata["token_usage"]["prompt_tokens"]
+        outputToken += response.response_metadata["token_usage"]["completion_tokens"]
+        totalToken += response.response_metadata["token_usage"]["total_tokens"]
         while True:
             if response.tool_calls and len(response.tool_calls) > 0:
                 print("AAAAAAA "+ str(response))
@@ -64,9 +71,14 @@ class PythonToolWriter():
                         message.append(tool_message)
                 print("CCCCC "+ str(len(message)))
                 response = self.llm.invoke(message)
+                print(f"本轮消耗的token数：inputToken:{response.response_metadata["token_usage"]["prompt_tokens"]}, outputToken:{response.response_metadata["token_usage"]["completion_tokens"]}, totalToken:{response.response_metadata["token_usage"]["total_tokens"]}")
+                inputToken += response.response_metadata["token_usage"]["prompt_tokens"]
+                outputToken += response.response_metadata["token_usage"]["completion_tokens"]
+                totalToken += response.response_metadata["token_usage"]["total_tokens"]
                 message.append(response)
             else:
                 print("BBBBB "+ str(response))
+                print(f"本次运行总共消耗的token数：inputToken:{inputToken}, outputToken:{outputToken}, totalToken:{totalToken}")
                 break
 
 
@@ -82,10 +94,12 @@ if __name__ == "__main__":
     # quest = "写一个计算根据顶点的坐标来计算三角形的面积的工具,输入是a:(Xa,Ya),b:(Xb,Yb),c:(Xc,Yc),输出是‘这个三角形的面积是area’这样的字符串，字符串里面的area用它的面积填充"
     # quest = "写一个计算球体体积的工具，输入是半径r,输出是‘这个球的体积是V’这样的字符串，字符串里面的V用它的体积填充"
     # quest = "写一个计算四边形面积的工具，输入是a:(Xa,Ya),b:(Xb,Yb),c:(Xc,Yc),d:(Xd,Yd),输出是‘这个四边形的面积是area’这样的字符串，字符串里面的area用它的面积填充"
-    quest = "写一个能打印杨辉三角的工具，输入是n,输出是杨辉三角的前n行，每行用逗号分隔"
+    # quest = "写一个能打印杨辉三角的工具，输入是n,输出是杨辉三角的前n行，每行用逗号分隔"
+    quest = "写一个能计算两个数的最大公约数的工具，输入是两个数a,b,输出是‘两个数的最大公约数是c’这样的字符串，字符串里面的c用它的最大公约数填充"
     print(2)
     writer = PythonToolWriter(
-        llm=ChatTongyi(model="qwen-max"),
+        # llm=ChatTongyi(model="qwen-max"),
+        llm=ChatOpenAI(model="gpt-4o-mini"),
         prompt_file="./prompts/ToolWriter1.txt"
     )
     print(3)
