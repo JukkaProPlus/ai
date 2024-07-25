@@ -11,6 +11,7 @@ from .tool_calculate_sphere_volume import document_tool_calculate_sphere_volume
 from .tool_CalculateQuadrilateralArea import document_tool_CalculateQuadrilateralArea
 from .tool_print_pascal_triangle import document_tool_print_pascal_triangle
 from .tool_calculate_gcd import document_tool_calculate_gcd
+from .tool_calculate_lcm import document_tool_calculate_lcm
 
 tools = [
     document_tool_read_file,
@@ -26,4 +27,5 @@ tools = [
     document_tool_CalculateQuadrilateralArea,
     document_tool_print_pascal_triangle,
     document_tool_calculate_gcd,
+    document_tool_calculate_lcm,
 ]
