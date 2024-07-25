@@ -1,5 +1,6 @@
 from langchain.tools import StructuredTool
 from langchain_community.chat_models.tongyi import ChatTongyi
+from langchain_openai import ChatOpenAI
 from langchain_core.language_models import BaseChatModel, BaseLanguageModel
 from typing import Union
 from langchain_core.prompts import PromptTemplate
@@ -80,7 +81,8 @@ if __name__ == "__main__":
     # quest = "写一个计算平行四边形面积的工具，输入是底边长和高，输出是‘这个底边为a,高为b的平行四边形的面积是c’这样的字符串，字符串里面的a和b分别用底边长和高填充，c用它的面积填充"
     # quest = "写一个计算根据顶点的坐标来计算三角形的面积的工具,输入是a:(Xa,Ya),b:(Xb,Yb),c:(Xc,Yc),输出是‘这个三角形的面积是area’这样的字符串，字符串里面的area用它的面积填充"
     # quest = "写一个计算球体体积的工具，输入是半径r,输出是‘这个球的体积是V’这样的字符串，字符串里面的V用它的体积填充"
-    quest = "写一个计算四边形面积的工具，输入是a:(Xa,Ya),b:(Xb,Yb),c:(Xc,Yc),d:(Xd,Yd),输出是‘这个四边形的面积是area’这样的字符串，字符串里面的area用它的面积填充"
+    # quest = "写一个计算四边形面积的工具，输入是a:(Xa,Ya),b:(Xb,Yb),c:(Xc,Yc),d:(Xd,Yd),输出是‘这个四边形的面积是area’这样的字符串，字符串里面的area用它的面积填充"
+    quest = "写一个能打印杨辉三角的工具，输入是n,输出是杨辉三角的前n行，每行用逗号分隔"
     print(2)
     writer = PythonToolWriter(
         llm=ChatTongyi(model="qwen-max"),

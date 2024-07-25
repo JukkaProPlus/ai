@@ -9,6 +9,7 @@ from .tool_CalculateParallelogramArea import document_tool_CalculateParallelogra
 from .tool_calculate_triangle_area_by_vertices import document_tool_calculate_triangle_area_by_vertices
 from .tool_calculate_sphere_volume import document_tool_calculate_sphere_volume
 from .tool_CalculateQuadrilateralArea import document_tool_CalculateQuadrilateralArea
+from .tool_print_pascal_triangle import document_tool_print_pascal_triangle
 
 tools = [
     document_tool_read_file,
@@ -22,4 +23,5 @@ tools = [
     document_tool_calculate_triangle_area_by_vertices,
     document_tool_calculate_sphere_volume,
     document_tool_CalculateQuadrilateralArea,
+    document_tool_print_pascal_triangle,
 ]
