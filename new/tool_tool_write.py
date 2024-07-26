@@ -10,14 +10,7 @@ from langchain_core.messages import HumanMessage
 from langchain_core.messages import AIMessage
 from langchain_core.messages import SystemMessage
 from langchain_core.messages import ToolMessage
-import chardet
-def read_file_with_chardet(file_path):
-    with open(file_path, 'rb') as f:
-        raw_data = f.read()
-        result = chardet.detect(raw_data)
-        encoding = result['encoding']
-    with open(file_path, 'r', encoding=encoding) as f:
-        return f.read()
+from readFile import read_file_with_chardet
 
 
 # def tool_write(file_path, content):
