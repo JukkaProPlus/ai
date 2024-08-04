@@ -4,3 +4,4 @@ venv_ai/
 venv/
 *.venv/
 venv_*/
+fine_tuning/output/
