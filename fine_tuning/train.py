@@ -13,6 +13,8 @@ import os, re
 from tqdm import tqdm
 import torch.nn as nn
 
+import pprint
+
 # 数据集
 DATASET_NAME = "rotten_tomatoes"
 # 加载数据集
@@ -20,9 +22,16 @@ raw_datasets = load_dataset(DATASET_NAME)
 
 # 训练集
 raw_train_dataset = raw_datasets["train"]
+# print(len(raw_train_dataset)) # 8530
+
+# print(raw_train_dataset[10])        #  {'text': 'this is a film well worth seeing , talking and singing heads and all .', 'label': 1}
 
 # 验证集
 raw_valid_dataset = raw_datasets["validation"]
+print(len(raw_valid_dataset))   #1066
+
+# print(raw_valid_dataset[10])        # {'text': "a mischievous visual style and oodles of charm make 'cherish' a very good ( but not great ) movie .", 'label': 1}
+# print(type(raw_valid_dataset))      # <class 'datasets.arrow_dataset.Dataset'>
 
 # 模型名称
 MODEL_NAME = "gpt2"
@@ -35,8 +44,8 @@ tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, trust_remote_code=True)
 tokenizer.add_special_tokens({"pad_token": "[PAD]"})
 tokenizer.pad_token_id = 0
 
-# 其他相关公共变量赋值
-pass
+# # 其他相关公共变量赋值
+# pass
 
 
 #设置随机种子：同个种子的随机序列可复现
@@ -51,6 +60,14 @@ label_ids = [
     for i in range(len(named_labels))
 ]
 
+# print("label_ids = ")
+# print(label_ids)                #[12480, 1930]
+# pprint.pprint(named_labels)     #['neg', 'pos']
+# pprint.pprint(label_ids)        #[12480, 1930]
+
+# print("type(label_ids) = ")
+# print(type(label_ids))              #<class 'list'>
+
 
 MAX_LEN=32   #最大序列长度（输入+输出）
 DATA_BODY_KEY = "text" # 数据集中的输入字段名
@@ -63,9 +80,18 @@ def process_fn(examples):
             "attention_mask": [],
             "labels": [],
         }
+    # print("*****************examples = ")             #*****************examples = 
+    # pprint.pprint(examples)                           # {
+    #                                                   # 	'text':['this is a good movie', 'i like this movie', 'a boring movie', ..., 'i hate this movie'],   # one thousands samples
+    #                                                   # 	'label':[1, 1, 0, ..., 0]                   # one thousands samples
+    #                                                   # } 
+    # print("####################################")
+    # print(len(examples[DATA_BODY_KEY]))                   # 1000
+    # print(len(examples[DATA_LABEL_KEY]))                  # 1000
+    # print("************************************")
     for i in range(len(examples[DATA_BODY_KEY])):
         # 自定义 Prompt 格式
-        prompt = f"{examples[DATA_BODY_KEY][i]} Sentiment: "
+        prompt = f"{examples[DATA_BODY_KEY][i]} Sentiment: "            # "this is a good movie Sentiment: ", 'Sentiment' in chinese means "情感"
         inputs = tokenizer(prompt, add_special_tokens=False)
         label = label_ids[examples[DATA_LABEL_KEY][i]]
         input_ids = inputs["input_ids"] + [tokenizer.eos_token_id, label]
@@ -80,9 +106,32 @@ def process_fn(examples):
             input_ids = input_ids + [tokenizer.pad_token_id] * (MAX_LEN - raw_len)
             attention_mask = [1] * raw_len + [0] * (MAX_LEN - raw_len)
             labels = [-100]*(raw_len-1) + [label] + [-100] * (MAX_LEN - raw_len)
+        # print(prompt)                       # 提示词，类似 nicely serves as an examination of a society in transition . Sentiment:
+        # print("raw_len = ", raw_len)        # 18
+        # print("MAX_LEN = ", MAX_LEN)        # 32 
+        # print("*******input_ids****************")     
+        # pprint.pprint(input_ids)    # [44460, 306, 9179, 355, 281, 12452, 286, 257, 3592, 287, 6801, 764, 11352, 3681, 25, 220, 50256, 1930, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        # print("#######################")
+
+        # print(prompt)                       # 提示词，类似 merely as a technical , logistical feat , russian ark marks a cinematic milestone . Sentiment:
+        # print("raw_len = ", raw_len)        # 24
+        # print("MAX_LEN = ", MAX_LEN)        # 32 
+        # print("*******attention_mask****************")     
+        # pprint.pprint(attention_mask)    # [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+        # print("#######################")
+
+        # print(prompt)                       # 提示词，类似 a very funny movie . Sentiment:
+        # print("raw_len = ", raw_len)        # 11
+        # print("MAX_LEN = ", MAX_LEN)        # 32 
+        # print("*******labels****************")     
+        # pprint.pprint(labels)    # [-100, -100, -100, -100, -100, -100, -100, -100, -100, -100, 1930, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100, -100]
+        # print("#######################")
         model_inputs["input_ids"].append(input_ids)
         model_inputs["attention_mask"].append(attention_mask)
         model_inputs["labels"].append(labels)
+    # print("*****************model_inputs = ")
+    # pprint.pprint(model_inputs)
+    # print("************************************")
     return model_inputs
 
 # 处理训练数据集
