@@ -48,7 +48,7 @@ if "message" not in st.session_state:
     st.session_state.messageType = []
     st.session_state.chatLLM = ChatTongyi(model="qwen-long")
     # st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="llama3")
-    # st.session_state.chatLLM = ChatOllama(base_url='http://127.0.0.1:11434',model="qwen2:7b")
+    # st.session_state.chatLLM = ChatOllama(base_url='http://192.168.0.109:11434',model="qwen2.5-coder:14b")
 
     promptTemplate = PromptTemplate.from_template(read_file_with_chardet("./mySimpleAgent.txt"))
     # promptTemplate = PromptTemplate.from_file("./mySimpleAgent.txt")
