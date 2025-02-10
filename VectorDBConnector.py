@@ -7,7 +7,7 @@ class MyVectorDBConnector:
         # chroma_client = chromadb.Client(Settings(allow_reset=True))
         chroma_client = chromadb.PersistentClient(path="./chroma")
         # 为了演示，实际不需要每次 reset()
-        # chroma_client.reset()
+        # chroma_client.reset() #清空并完全重置数据库，这是破坏性的且不可逆的
         # 创建一个 collection
         self.collection = chroma_client.get_or_create_collection(
             name=collection_name)
