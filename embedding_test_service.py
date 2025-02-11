@@ -18,6 +18,17 @@ class SimilarityRequest(BaseModel):
     sentences_1: List[str]
     sentences_2: List[str]
 
+class SearchRequest(BaseModel):
+    sentence:str
+    topn:int
+
+@app.get("/search/")
+async def search(request:SearchRequest):
+    try:
+        return {"sentence": "hello world"}
+    except Exception as e:
+        raise HTTPException(status_code=423, detail=str(e))
+
 @app.post("/embed/")
 async def embed(request: EmbedRequest):
     try:

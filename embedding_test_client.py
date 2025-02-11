@@ -22,6 +22,15 @@ def test_similarity():
     else:
         print("相似度请求失败:", response.status_code, response.text)
 
+def test_search():
+    sentence = "你好，世界"
+    response = requests.get(f"{BASE_URL}/search/", json={"sentence":sentence, "topn":5})
+    if response.status_code == 200:
+        print("返回：", response.json())
+    else:
+        print("search请求失败：", response.status_code, response.text)
+
 if __name__ == "__main__":
-    test_embed()
+    # test_embed()
     # test_similarity()
+    test_search();
